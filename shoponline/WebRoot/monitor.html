@@ -1,0 +1,81 @@
+<!DOCTYPE html>
+<html>
+<head>
+<meta charset="UTF-8">
+<title>大表监控</title>
+</head>
+<body>
+<table id="example-basic1" style="width:70%;margin-left:15%">
+			<thead>
+				<tr>
+					<th>区域</th>
+					<th>相关操作</th>
+				</tr>
+			</thead>
+			<tbody>
+				<s:iterator value="#areaList" status="status1">
+					<s:if test="#session.operator.hasAreaByName(name)">
+						<tr data-tt-id="<s:property value="#status1.count"/>" class="f1">
+							<td>${name }</td>
+							<td> <s:a action="area_delete?id=%{id}"
+									onClick="return window.confirm('这使它的下级区域变成定级区域，您确定要删除吗？')"
+									class="o1">删除</s:a>  <a href="#" class="edit" id="${id}">修改</a></td>
+						</tr>
+						<s:iterator value="children" status="status2">
+							<s:if test="#session.operator.hasAreaByName(name)">
+								<tr
+									data-tt-id="<s:property value="#status1.count"/>.<s:property value="#status2.count"/>"
+									data-tt-parent-id="<s:property value="#status1.count"/>"
+									class="f2">
+									<td>${name }</td>
+									<td> <s:a action="area_delete?id=%{id}"
+											onClick="return window.confirm('这使它的下级区域变成定级区域，您确定要删除吗？')" class="o1">删除</s:a> 
+										<a href="#" class="edit" id="${id}">修改</a></td>
+								</tr>
+								<s:iterator value="children" status="status3">
+									<s:if test="#session.operator.hasAreaByName(name)">
+										<tr
+											data-tt-id="<s:property value="#status1.count"/>.<s:property value="#status2.count"/>.<s:property value="#status3.count"/>'>"
+											data-tt-parent-id="<s:property value="#status1.count"/>.<s:property value="#status2.count"/>"
+											class="f3">
+											<td>${name }</td>
+											<td> <s:a action="area_delete?id=%{id}"
+													onClick="return window.confirm('这使它的下级区域变成定级区域，您确定要删除吗？')" class="o1">删除</s:a> 
+												<a href="#" class="edit" id="${id}">修改</a></td>
+										</tr>
+										<s:iterator value="children" status="status4">
+											<s:if test="#session.operator.hasAreaByName(name)">
+												<tr
+													data-tt-id="<s:property value="#status1.count"/>.<s:property value="#status2.count"/>.<s:property value="#status3.count"/>.<s:property value="#status4.count"/>'>"
+													data-tt-parent-id="<s:property value="#status1.count"/>.<s:property value="#status2.count"/>.<s:property value="#status3.count"/>'>">
+													<td>${name }</td>
+													<td> <s:a action="area_delete?id=%{id}"
+															onClick="return window.confirm('您确定要删除吗？')" class="o1">删除</s:a> 
+														<a href="#" class="edit" id="${id}">修改</a></td>
+												</tr>
+											</s:if>
+										</s:iterator>
+									</s:if>
+								</s:iterator>
+							</s:if>
+						</s:iterator>
+
+					</s:if>
+				</s:iterator>
+
+			</tbody>
+			<tfoot>
+			     <tr>
+				
+					<td colspan="2" class="r" id=""><s:fielderror>
+									<s:param>error</s:param>
+								</s:fielderror></td>
+				</tr>
+				<tr>
+					<td colspan="2" class="cols" id=""><input class="dialog"
+						type="button" value="新建" /></td>
+				</tr>
+			</tfoot>
+		</table>
+</body>
+</html>
